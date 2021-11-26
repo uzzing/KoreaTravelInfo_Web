@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scit.team4.dao.AskMapper">
+<insert id="insertAsk" parameterType="Ask">
+INSERT into ask
+(ask_seq,ask_title,userid,ask_text)
+VALUES(
+ask_sequence.nextval, #{ask_title},#{userid},#{ask_text}
+)
+</insert>
+
+<select id="selectAllAsk" resultType="Ask" parameterType="Map">
+
+select * from(   <!-- 삼중 쿼리 도랏?-->  
+    select rownum n, b.* 
+    from
+        (select <!-- rownum을 가져오기 위해 테이블을 서브쿼리 화-->  
+            ASK_SEQ
+			,ASK_TITLE
+			,to_char(ASK_DATE,'YYYY/MM/DD') as ASK_DATE
+			,userid
+        from
+            Ask
+        where
+          <choose> 
+			<when test="searchItem == 'ask_title'">ASK_TITLE</when>
+			<when test="searchItem == 'userid'">userid</when>
+		  </choose>
+		like '%'||#{searchWord}||'%'
+        order by ASK_SEQ desc
+    ) b 
+)
+where
+	n &gt;= #{srow}
+	and n &lt;= #{erow} 
+</select>
+
+
+<select id="selectOneAsk" parameterType="int" resultType="Ask">
+select
+	ASK_SEQ
+	,ASK_TITLE
+	,ASK_TEXT
+	,to_char(ASK_DATE,'YYYY/MM/DD') as ASK_DATE
+	,userid
+from 
+	Ask
+where
+	ask_seq = #{ask_seq}
+</select>
+
+<delete id="deleteAsk" parameterType="int">
+delete 
+from
+	Ask
+where 
+	ask_seq = #{ask_seq}	
+</delete>
+
+<update id="updateAsk" parameterType="Ask">
+update Ask
+set 
+	ASK_TITLE = #{ask_title}
+	,ASK_TEXT = #{ask_text}
+	,ASK_DATE = sysdate
+where 
+	ASK_SEQ = #{ask_seq}
+</update>
+
+<select id="getBoardCount" parameterType="Map" resultType="int">
+select 
+	count(*)
+from
+	Ask
+where
+	<choose> 
+		<when test="searchItem == 'ask_title'">ask_title</when>
+		<when test="searchItem == 'userid'">userid</when>
+	</choose>
+	like '%'||#{searchWord}||'%'
+</select>
+
+</mapper>
