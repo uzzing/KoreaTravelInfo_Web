@@ -66,7 +66,7 @@
 		<tbody>
 			<c:forEach var="ask" items="${list}" varStatus="stat">
 				<tr>
-					<td>${stat.index + navi.srow }</td>
+					<td>${stat.index + navi.srow}</td>
 					<td class="title">
 						<a href="javascript:detailAsk(${ask.ask_seq});">${ask.ask_title}</a>
 					</td> 
@@ -83,7 +83,6 @@
 		<a href="/?currentPage=${navi.currentPage-navi.pagePerGroup}&searchItem=${searchItem}&searchWord=${searchWord}">
 		◁◁
 		</a>
-		<!-- 지금 무조건 1페이지로 이동함,,, 선생님 코드랑 비교해서 알아볼것. -->
 		<a href="/?currentPage=${navi.currentPage-1}&searchItem=${searchItem}&searchWord=${searchWord}">◀</a>&nbsp;<!-- "<"표기 -->
 		<c:forEach var="page" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
 			<!-- 요청페이지와 현재 페이지가 같을 경우. -->

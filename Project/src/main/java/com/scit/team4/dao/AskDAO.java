@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.scit.team4.vo.ask;
+import com.scit.team4.vo.comment_ask;
 
 
 @Repository
@@ -98,6 +99,50 @@ public class AskDAO {
 		}
 		
 		return result;
+	}
+
+	public comment_ask selectOneComment(int ask_seq) {
+		AskMapper mapper = session.getMapper(AskMapper.class);
+		comment_ask result = null;
+		try {
+			result = mapper.selectOneComment(ask_seq);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int insertComment(comment_ask comment) {
+		AskMapper mapper = session.getMapper(AskMapper.class);
+		int result =0;
+		try {
+			result = mapper.insertComment(comment);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int updateComment(comment_ask comment) {
+		AskMapper mapper = session.getMapper(AskMapper.class);
+		int result = 0;
+		try {
+			result = mapper.updateComment(comment);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public String selectAdminid() {
+		AskMapper mapper = session.getMapper(AskMapper.class);
+		String result = null;
+		try {
+			result = mapper.selectAdminid();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result; 
 	}
 
 }

@@ -8,7 +8,7 @@
 <h1>
 	Hello world!  
 </h1>
-
+<a href="/listAsk">문의리스트</a>
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>

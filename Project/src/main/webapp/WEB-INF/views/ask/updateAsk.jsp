@@ -20,11 +20,12 @@
 <div class="container" style="padding : 30px; max-width: 40%" >
 	<h2 class="text-center">문의 수정</h2>
 	<hr width = "100%" color = "gray">
-	<form action ="writeAsk" method="POST">
-	<input type="hidden" name="userid" value="aa">
+	<form action ="updateAsk" method="POST">
+	<input type="hidden" name="userid" value="${ask.userid}">
+    <input type="hidden" name="ask_seq" value="${ask.ask_seq}">
 		<div class="form-group">
             <label>작성자</label><br>
-            <span>aa</span>
+            <span>${ask.userid}</span>
         </div>
         <div class="form-group">
             <label>문의 제목</label>
@@ -35,8 +36,8 @@
              <textarea name="ask_text" class="form-control" rows="5">${ask.ask_text}</textarea>
         </div>
 
-	<input type="button" value="목록으로" onclick="location.href='/'" class="btn">
-	<input type="submit" value="문의수정" onclick="" class="btn">
+	<input type="button" value="목록으로" onclick="location.href='/listAsk'" class="btn">
+	<input type="submit" value="문의수정" class="btn">
 	
 	</form>
 </div><!-- wrapper 종료 -->

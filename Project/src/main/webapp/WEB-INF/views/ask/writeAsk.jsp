@@ -21,10 +21,10 @@
 	<h2 class="text-center">문의 작성</h2>
 	<hr width = "100%" color = "gray">
 	<form action ="writeAsk" method="POST">
-	<input type="hidden" name="userid" value="aa">
+	<input type="hidden" name="userid" value="${sessionScope.loginid}">
 		<div class="form-group">
             <label>작성자</label><br>
-            <span>aa</span>
+            <span>${sessionScope.loginid}</span>
         </div>
         <div class="form-group">
             <label>문의 제목</label>
@@ -35,7 +35,7 @@
              <textarea name="ask_text" class="form-control" rows="5"></textarea>
         </div>
 
-	<input type="button" value="목록으로" onclick="" class="btn">
+	<input type="button" value="목록으로" onclick="location.href='/listAsk'" class="btn">
 	<input type="submit" value="문의하기" onclick="" class="btn">
 	
 	</form>

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>문의 자세히 보기</title>
+<title>Insert title here</title>
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -19,6 +19,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
 function askList(){
+	//let target = '${pageContext.request.contextPath}'; 
+	// http://localhost:8088/board/writeboard 중에서의 /board. 동적으로 읽어오기 . 
+	//현재 페이지에서만 사용가능. 프로젝트 안에서 얼마든지 앞에/board부분이 얼마든지 바뀌수 있기때문에 동적으로 만드는것. 
 	location.href = '/'; 
 }
 
@@ -62,42 +65,20 @@ function askUpdate(){
           			 <th class="active">글 내용</th>
             		 <td colspan="3">${ask.ask_text}</td>
          		  </tr>
-         		  <tr>
-         		  	 <th class="active">답변</th>
-         		  	<c:if test="${comment != null}">
-            			 <td colspan="3">${comment.comment_text}</td>
-                 	 </c:if>
-                 	<c:if test="${comment == null}">
-            			 <td colspan="3">아직 답변이 작성되지 않았습니다.</td>
-                 	 </c:if>	
-         		  </tr>
-         		  <tr>
-        			 <td colspan="4" class="text-center">	
-        			 	<c:if test="${ask.userid == sessionScope.loginid}">
-  	  					 	<input type="button" class="btn black" value="수정하기" onclick="location.href='/updateAsk?ask_seq=${ask.ask_seq}'">          
-							<input type="button" class="btn black" value="삭제하기" onclick="askDelete();">
-						</c:if>
-						<c:if test="${adminid == sessionScope.loginid && comment != null}">
-							<input type="button" class="btn black" value="답변수정" onclick="location.href='/updateComment?ask_seq=${ask.ask_seq}&comment_seq=${comment.comment_seq}'">  
-						</c:if>
-						<input type="button" class="btn black" value="목록보기" onclick="location.href='/listAsk'">
-        			 </td>
-       			  </tr>
         	    </table>
         	</div>
         	<div class="form-group">  
-        	    <c:if test="${adminid == sessionScope.loginid && comment == null}">
-        	    	<form action ="writeComment" method="POST">
+        	    	<form action ="updateComment" method="POST">
         	    		<input type="hidden" name="adminid" value="${adminid}">
         	    		<input type="hidden" name="ask_seq" value="${ask.ask_seq}">
                		
                 	<div class="form-group">
-                		<label>답변 작성 </label>
-               			<textarea name="comment_text" class="form-control" rows="5"></textarea>
+                		<label>답변 수정 </label>
+               			<textarea name="comment_text" class="form-control" rows="5">${comment.comment_text}</textarea>
                 	</div>
-		     			<input type="submit" value="답변하기" class="btn">
+		     			<input type="submit" value="답변수정" class="btn">
+		     			<input type="button" class="btn black" value="목록보기" onclick="location.href='/listAsk'">
         	    	</form>
-        	    </c:if>
     	    </div>
    		</div>
 	</div>

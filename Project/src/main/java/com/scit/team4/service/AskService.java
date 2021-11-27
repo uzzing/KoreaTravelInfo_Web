@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.scit.team4.dao.AskDAO;
 import com.scit.team4.vo.ask;
+import com.scit.team4.vo.comment_ask;
 
 @Service
 public class AskService {
@@ -40,6 +41,26 @@ public class AskService {
 
 	public int getBoardCount(String searchItem, String searchWord) {
 		int result = askdao.getBoardCount(searchItem,searchWord);
+		return result;
+	}
+
+	public comment_ask selectOneComment(int ask_seq) {
+		comment_ask result = askdao.selectOneComment(ask_seq);
+		return result;
+	}
+
+	public int insertComment(comment_ask comment) {
+		int result = askdao.insertComment(comment);
+		return result;
+	}
+
+	public int updateComment(comment_ask comment) {
+		int result = askdao.updateComment(comment);
+		return result;
+	}
+
+	public String selectAdminid() {
+		String result = askdao.selectAdminid();
 		return result;
 	}
 	

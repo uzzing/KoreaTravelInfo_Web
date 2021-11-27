@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.scit.team4.service.AskService;
 import com.scit.team4.util.PageNavigator;
 import com.scit.team4.vo.ask;
+import com.scit.team4.vo.comment_ask;
 
 @Controller
 public class AskController {
@@ -21,14 +22,14 @@ public class AskController {
 	AskService askservice;
 	private static Logger logger = LoggerFactory.getLogger(AskController.class);
 	
-	@RequestMapping("/")
-	public String index(
+	@RequestMapping("/listAsk")
+	public String indexAskList(
 			@RequestParam(value="currentPage",defaultValue ="1") int currentPage,
 			@RequestParam(value="searchItem", defaultValue="ask_title") String searchItem, 
 			@RequestParam(value="searchWord", defaultValue="") String searchWord, 
 			Model model) {
 		
-		String userid = "aa";
+		String adminid = "admin";
 		
 		int countPerPage = 10;
 		int totalRecordCount = askservice.getBoardCount(searchItem, searchWord);
@@ -44,6 +45,7 @@ public class AskController {
 		
 		logger.info("[[문의리스트 정보]] : "+list);
 		model.addAttribute("list", list);
+		model.addAttribute("adminid", adminid);
 		
 		model.addAttribute("searchItem", searchItem);
 		model.addAttribute("searchWord", searchWord);
@@ -53,7 +55,7 @@ public class AskController {
 		model.addAttribute("currentPage", navi.getCurrentPage());
 		model.addAttribute("navi", navi);
 		
-		return"listAsk";
+		return"/listAsk";
 	}
 
 	@RequestMapping("/writeAsk")
@@ -67,23 +69,36 @@ public class AskController {
 		int result = askservice.insertAsk(ask);
 		logger.info("등록여부:{}",result);
 		
-		return "redirect:/";
+		return "redirect:/listAsk";
 	}
 	
 	@RequestMapping("/detailAsk")
 	public String detailAsk(int ask_seq, Model model) {
-		//DB접속
+		
+		String adminid = "admin";
+		//DB접속 
+		
 		ask ask =askservice.selectOneAsk(ask_seq);
 		
 		//코멘트 불러오기 
-		
+		comment_ask comment = askservice.selectOneComment(ask.getAsk_seq());
 		
 
 		//모델작업
-
+		model.addAttribute("adminid", adminid);
 		model.addAttribute("ask", ask);
+		model.addAttribute("comment", comment);
 
 		return"ask/detailAsk";
+	}
+	
+	@RequestMapping(value="/writeComment",method=RequestMethod.POST)
+	public String writeComment(comment_ask comment){
+		
+		int result = askservice.insertComment(comment);
+		logger.info("등록여부:{}",result);
+		
+		return "redirect:/listAsk";
 	}
 	
 	@RequestMapping("/deleteAsk")
@@ -94,7 +109,7 @@ public class AskController {
 		
 		int result = askservice.deleteAsk(ask_seq);
 		if(result == 1) {
-			return"redirect:/";
+			return"redirect:/listAsk";
 		}else {
 			logger.info("수정실패");
 			return "";
@@ -111,17 +126,45 @@ public class AskController {
 
 	@RequestMapping(value="/updateAsk", method=RequestMethod.POST)
 	public String updateboard(ask ask) {
-		logger.info("변경정보 받아옴!!");
-		
-//		Board b = repository.selectOne(board.getBoardnum());
-		
+		logger.info("받아온 정보:{}",ask);
 		int result = askservice.updateAsk(ask);
 		logger.info("수정여부:{}",result);
 		if(result == 1) {
-			return"redirect:/";
+			return"redirect:/listAsk";
 		}else {
 			logger.info("수정실패");
 			return "";
 		}
+	}
+	
+	
+	@RequestMapping("/updateComment")
+	public String updateComment(int ask_seq,int comment_seq,Model model){
+		
+		String adminid = "admin";
+		
+		ask ask =askservice.selectOneAsk(ask_seq);
+		comment_ask comment = askservice.selectOneComment(ask.getAsk_seq());
+		
+
+		//모델작업
+		model.addAttribute("adminid", adminid);
+		model.addAttribute("ask", ask);
+		model.addAttribute("comment", comment);
+		
+		return "ask/updateComment";
+	}
+	@RequestMapping(value="/updateComment", method=RequestMethod.POST)
+	public String updateComment(comment_ask comment) {
+		
+		int result = askservice.updateComment(comment);
+		logger.info("수정여부:{}",result);
+		if(result == 1) {
+			return"redirect:/listAsk";
+		}else {
+			logger.info("수정실패");
+			return "";
+		}
+		
 	}
 }
