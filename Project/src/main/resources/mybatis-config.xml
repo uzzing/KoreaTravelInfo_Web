@@ -6,6 +6,8 @@
 	<typeAliases>
 		<typeAlias type="com.scit.team4.vo.ask" alias="Ask" />
 		<typeAlias type="com.scit.team4.vo.comment_ask" alias="Comment" />
+		<typeAlias type="com.scit.team4.vo.administrator" alias="Administrator" />
+		<typeAlias type="com.scit.team4.vo.user_Info" alias="User_Info" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/AskMapper.xml" />

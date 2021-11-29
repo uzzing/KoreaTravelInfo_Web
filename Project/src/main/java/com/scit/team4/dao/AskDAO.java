@@ -8,8 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.scit.team4.vo.administrator;
 import com.scit.team4.vo.ask;
 import com.scit.team4.vo.comment_ask;
+import com.scit.team4.vo.user_Info;
 
 
 @Repository
@@ -134,11 +136,22 @@ public class AskDAO {
 		return result;
 	}
 
-	public String selectAdminid() {
+	public administrator selectOneAdmin(String checkedID) {
 		AskMapper mapper = session.getMapper(AskMapper.class);
-		String result = null;
+		administrator result = null;
 		try {
-			result = mapper.selectAdminid();
+			result = mapper.selectOneAdmin(checkedID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result; 
+	}
+
+	public user_Info selectOneUser(String checkedID) {
+		AskMapper mapper = session.getMapper(AskMapper.class);
+		user_Info result = null;
+		try {
+			result = mapper.selectOneUser(checkedID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

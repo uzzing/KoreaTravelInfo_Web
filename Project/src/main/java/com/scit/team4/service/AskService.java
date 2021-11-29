@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.scit.team4.dao.AskDAO;
+import com.scit.team4.vo.administrator;
 import com.scit.team4.vo.ask;
 import com.scit.team4.vo.comment_ask;
+import com.scit.team4.vo.user_Info;
 
 @Service
 public class AskService {
@@ -59,8 +61,13 @@ public class AskService {
 		return result;
 	}
 
-	public String selectAdminid() {
-		String result = askdao.selectAdminid();
+	public administrator selectOneAdmin(String checkedID) {
+		administrator result = askdao.selectOneAdmin(checkedID);
+		return result;
+	}
+
+	public user_Info selectOneUser(String checkedID) {
+		user_Info result = askdao.selectOneUser(checkedID);
 		return result;
 	}
 	

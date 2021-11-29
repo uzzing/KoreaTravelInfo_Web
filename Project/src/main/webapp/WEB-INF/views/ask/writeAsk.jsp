@@ -14,7 +14,18 @@
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<script>
+	function formCheck(){
+		let title = document.getElementById("title");
+		let text = document.getElementById("text");
+		
+		if(title.value.trim().length == 0 || text.value.trim().length == 0 ){
+			alert('글제목과 내용은 입력되어야합니다');
+			return false;
+		}
+		return true;
+	}
+</script>
 </head>
 <body>
 <div class="container" style="padding : 30px; max-width: 40%" >
@@ -32,11 +43,11 @@
         </div>
         <div class="form-group">
             <label>문의내용 </label>
-             <textarea name="ask_text" class="form-control" rows="5"></textarea>
+             <textarea name="ask_text" class="form-control" rows="5" id="text"></textarea>
         </div>
 
 	<input type="button" value="목록으로" onclick="location.href='/listAsk'" class="btn">
-	<input type="submit" value="문의하기" onclick="" class="btn">
+	<input type="submit" value="문의하기" onclick="return formCheck();" class="btn">
 	
 	</form>
 </div><!-- wrapper 종료 -->

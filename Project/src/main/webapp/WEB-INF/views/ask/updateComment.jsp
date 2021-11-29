@@ -19,10 +19,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
 function askList(){
-	//let target = '${pageContext.request.contextPath}'; 
-	// http://localhost:8088/board/writeboard 중에서의 /board. 동적으로 읽어오기 . 
-	//현재 페이지에서만 사용가능. 프로젝트 안에서 얼마든지 앞에/board부분이 얼마든지 바뀌수 있기때문에 동적으로 만드는것. 
-	location.href = '/'; 
+	location.href = '/listAsk'; 
 }
 
 function askDelete(){

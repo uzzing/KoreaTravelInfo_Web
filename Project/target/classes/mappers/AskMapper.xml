@@ -12,6 +12,26 @@ ask_seq.nextval, #{ask_title},#{userid},#{ask_text}
 )
 </insert>
 
+<select id="selectOneAdmin" parameterType="String" resultType="Administrator">
+select
+	adminid
+	,adminpwd
+from 
+	Administrator
+where
+	adminid = #{checkedID}
+</select>
+
+<select id="selectOneUser" parameterType="String" resultType="User_Info">
+select
+	userid
+	,userpwd
+from 
+	User_Info
+where
+	userid = #{checkedID}
+</select>
+
 <select id="selectAllAsk" resultType="Ask" parameterType="Map">
 
 select * from(  

@@ -19,7 +19,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
 function askList(){
-	location.href = '/'; 
+	location.href = '/listAsk'; 
 }
 
 function askDelete(){
@@ -28,13 +28,13 @@ function askDelete(){
 	let answer =confirm('문의를 삭제하시겠습니까?');
 	
 	if(answer){
-		location.href="deleteAsk?ask_seq="+ask_seq
+		location.href="deleteAsk?ask_seq="+ask_seq;
 	}
 }
 
 function askUpdate(){
 	let ask_seq='${ask.ask_seq}';
-	location.href="updateAsk?ask_seq="+ask_seq
+	location.href="updateAsk?ask_seq="+ask_seq;
 }
 </script>
 </head>
