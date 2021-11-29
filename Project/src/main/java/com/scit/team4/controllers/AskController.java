@@ -17,11 +17,13 @@ import com.scit.team4.vo.ask;
 
 @Controller
 public class AskController {
+	
 	@Autowired
 	AskService askservice;
+	
 	private static Logger logger = LoggerFactory.getLogger(AskController.class);
 	
-	@RequestMapping("/")
+	@RequestMapping("/board")
 	public String index(
 			@RequestParam(value="currentPage",defaultValue ="1") int currentPage,
 			@RequestParam(value="searchItem", defaultValue="ask_title") String searchItem, 
@@ -53,7 +55,7 @@ public class AskController {
 		model.addAttribute("currentPage", navi.getCurrentPage());
 		model.addAttribute("navi", navi);
 		
-		return"listAsk";
+		return "listAsk";
 	}
 
 	@RequestMapping("/writeAsk")

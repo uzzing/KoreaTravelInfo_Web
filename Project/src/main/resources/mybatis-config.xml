@@ -5,8 +5,10 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.scit.team4.vo.ask" alias="Ask" />
+		<typeAlias type="com.scit.team4.vo.Bookmark" alias="Bookmark" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/AskMapper.xml" />
+		<mapper resource="mappers/BookmarkMapper.xml" />
 	</mappers>
 </configuration>

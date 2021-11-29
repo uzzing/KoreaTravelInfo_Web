@@ -1,0 +1,171 @@
+@charset "UTF-8";
+
+body {
+	position: absolute;
+  	top: 180%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+#logo {
+	font-size: 70px;
+	text-align: center;
+	font-family: 'Comforter Brush', cursive;
+}
+
+#tabs {
+	width: 100%;
+	height: 403px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: table;
+}
+
+.tabs-Title {
+	font-size: 50px;
+	margin-left: 10px;
+}
+
+.tabs1, .tabs2, .tabs3, .tabs4 {
+	position: relative;
+	width: 250px;
+	float: left;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+#tabs img {
+	position: absolute;
+	width: 240px;
+	height: 300px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 8px 1px #adadad;
+}
+
+#tabs img:hover {
+	cursor: pointer;
+}
+
+#tabs .tabsTitle {
+	position: absolute;
+	font-size: 50px;
+	color: white;
+	padding: 10px;
+	margin-left: 10px;
+}
+
+#tabs .tabsSub {
+	position: absolute;
+    color: white;
+    font-size: 30px;
+    margin-top: 80px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+#header2 {
+	height: 210px;
+	display: table;
+	margin-top: 20px;
+}
+
+#header2:hover {
+	cursor: pointer;
+}
+
+#header2 .bookmark, .question {
+	height: 210px;
+	float: left;
+}
+
+
+#header2 img{
+	height: 200px;
+    width: 500px;
+    margin-left: 21px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 1px 1px 8px 1px #adadad;
+}
+
+#header2 .text {
+	font-size: 40px;
+    text-align: center;
+    margin-top: -136px;
+    margin-left: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+#box {
+	padding-top: 30px;
+	padding-bottom: 5px;
+}
+
+#box .boxTitle {
+	font-size: 30px;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+#container1, #container2, #container3, #container4 {
+	width: 1078px;
+}
+
+.box1, .box2, .box3, .box4 {
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.box1, .box3 {
+	background-color: #f5f5f5;
+	border-radius: 10px;
+}
+
+.placeBox {
+	width: 240px;
+	height: 240px;
+	border: 1px solid #adadad;
+	border-radius: 10px;
+	margin: 10px;
+	overflow: hidden;
+	box-shadow: 1px 1px 5px -2px #adadad;
+}
+
+.placeBox .imgBox {
+	width: 240px;
+	height: 180px;
+	position: relative;
+}
+
+.placeBox .imgBox .thumbnail {
+	width: 250px;
+	height: 180px;
+	position: absolute;
+}
+
+.placeBox .imgBox .heart {
+	width: 35px;
+    position: absolute;
+    margin-left: 255px;
+    margin-top: 10px;
+    filter: invert(100%);
+}
+
+.placeBox .title {
+	font-size: 18px;
+	padding: 10px;
+}
+
+.placeBox .addr {
+	font-size: 13px;
+	padding-left: 10px;
+}
+
+#footer {
+	height: 110px;
+	font-size: 15px;
+	color: #adadad;
+	text-align: center;
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scit.team4.dao.BookmarkMapper">
+
+<insert id="makeBookmark" parameterType="HashMap">
+INSERT INTO bookmark
+(
+	contentId
+	,title
+	,addr
+	,userid
+	,typeOf
+)
+VALUES
+(
+	#{contentId}
+	,#{title}
+	,#{addr}
+	,#{userid}
+	,#{typeOf}
+)
+</insert>
+
+<delete id="deleteBookmark" parameterType="HashMap">
+DELETE FROM bookmark
+WHERE
+	contentId = #{contentId}
+AND
+	userid = #{userid}
+</delete>
+
+<select id="getBookmark" parameterType="HashMap" resultType="Bookmark">
+SELECT *
+FROM 
+	bookmark
+WHERE 
+	typeOf = #{typeOf}
+AND
+	userid = #{userid}
+</select>
+
+</mapper>

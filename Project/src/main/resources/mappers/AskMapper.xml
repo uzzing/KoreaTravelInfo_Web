@@ -6,9 +6,17 @@
 <mapper namespace="com.scit.team4.dao.AskMapper">
 <insert id="insertAsk" parameterType="Ask">
 INSERT into ask
-(ask_seq,ask_title,userid,ask_text)
+(
+	ask_seq
+	,ask_title
+	,userid
+	,ask_text
+)
 VALUES(
-ask_sequence.nextval, #{ask_title},#{userid},#{ask_text}
+	ask_sequence.nextval
+	,#{ask_title}
+	,#{userid}
+	,#{ask_text}
 )
 </insert>
 

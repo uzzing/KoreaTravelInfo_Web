@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+body {
+	position: absolute;
+	margin-top: 370px;
+	height: 100%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+#logo {
+	font-size: 70px;
+	text-align: center;
+	font-family: 'Comforter Brush', cursive;
+}
+
+#logo:hover {
+	cursor: pointer;
+}
+
+#tabs {
+	font-family: 'Gowun Dodum', sans-serif;
+	width: 1145px;
+	box-shadow: 1px 1px 5px -2px #adadad;
+}
+
+#tabs ul {
+	font-size: 20px;
+}
+
+#tabs .ui-state-active {
+	border: 1px solid #808ecf;
+	background: #9caeff !important;
+}
+
+.list {
+	display: table;
+}
+
+.placeBox {
+	width: 250px;
+	height: 280px;
+	border: 1px solid #adadad;
+	border-radius: 10px;
+	margin: 10px;
+	overflow: hidden;
+	box-shadow: 1px 1px 5px -2px #adadad;
+	float: left;
+}
+
+.placeBox .imgBox {
+	width: 250px;
+	height: 180px;
+	position: relative;
+}
+
+.placeBox .imgBox .thumbnail {
+	width: 250px;
+	height: 180px;
+	position: absolute;
+}
+
+.placeBox .imgBox .heart {
+	width: 35px;
+	height: 35px;
+    position: absolute;
+    margin-left: 205px;
+    margin-top: 10px;
+    filter: invert(1);
+    z-index: 5;
+}
+
+.placeBox .title {
+	font-size: 18px;
+	padding: 10px;
+}
+
+.placeBox .addr {
+	font-size: 13px;
+	padding-left: 10px;
+}
+
+.placeBox .title:hover {
+	cursor: pointer;
+}
+
+.placeBox .addr:hover {
+	cursor: pointer;
+}
+
+
+#footer {
+	height: 110px;
+	font-size: 15px;
+	color: #adadad;
+	text-align: center;
+}
