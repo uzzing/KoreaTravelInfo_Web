@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html>
 <head>
 <title>Bookmark</title>
@@ -18,13 +17,17 @@
 	let pageNo = 1;
 	let areaCode = 0;
 	var typeOf = "";
+	var userid = "";
 	
 	$(function() {
+		userid = $('#loginId').val();
 		$( "#tabs" ).tabs();
-	
-		getBookmark("1");
-		buttons();
 		home();
+		
+		if (userid !== "yuha1219") {
+			getBookmark("1");
+			buttons();
+		}
 	});
 	
 	function buttons() {
@@ -36,7 +39,8 @@
 	}
 	
 	function getBookmark(typeOf) {
-		var userid = 'a';
+		userid = $('#loginId').val();
+		console.log(userid);
 		
 		$.ajax({
 			type: 'get',
@@ -46,6 +50,7 @@
 			success: showList,
 			error: function(e) {
 				alert('북마크 불러오기 에러 : ' + e);
+				console.log(e);
 				return false;
 			}
 		});
@@ -75,12 +80,20 @@
 								  + "contentId=" + data.contentId;
 				
 				let link = 'resources/image/default/default_bookmark.jpg';
+				
 				// get image
 				$.get(uri, function(item, status) {
 					if (status === 'success') {
+						console.log(item.response.body.items.item);
+						var json = item.response.body.items;
 						
-						if (item.response.body.items !== "")
-							link = item.response.body.items.item[0].originimgurl;
+						if (json !== "") {
+							console.log(json.length);
+							if (typeof json.item.length !== 'undefined')
+								link = item.response.body.items.item[0].originimgurl;
+							else
+								link = item.response.body.items.item.originimgurl;
+						}
 						
 						console.log(link);
 						
@@ -107,17 +120,15 @@
 	}
 	
 	function goMap(obj) {
-		var title = $(obj).children('.title').text();
-		console.log(title);
+		var title = $(obj).text();
 		var url = "https://map.naver.com/v5/search/" + title;
 		window.open(url, '_blank');
 	}
 	
 	function deleteFromDB(obj) {
-		
+		userid = $('#loginId').val();
 		var contentId = $(obj).parents('.placeBox').find('.contentId').val();
-		var userid = 'a';
-		
+
 		$.ajax({
 			type: 'post',
 			url: 'deleteBookmark',
@@ -142,31 +153,33 @@
 </script>
 </head>
 <body>
-<div id="logo">K-Travel</div>
+	<div id="logo">K-Travel</div>
+	<input type="hidden" id="loginId" value="${sessionScope.loginId}">
+	<div id="header" style="font-size: 35px; margin-bottom: 15px; margin-left: 10px;">나의 관심장소</div>
 	<div id="tabs">
-	  <ul>
-	    <li><a href="#tabs-1" id="1">관광지</a></li>
-	    <li><a href="#tabs-2" id="2">숙박</a></li>
-	    <li><a href="#tabs-3" id="3">식당</a></li>
-	    <li><a href="#tabs-4" id="4">쇼핑</a></li>
-	  </ul>
-	  <div id="tabs-1">
-		<div class="list"></div>
-	  </div>
-	  <div id="tabs-2">
-	    <div class="list"></div>
-	  </div>
-	  <div id="tabs-3">
-	     <div class="list"></div>
-	  </div>
-	  <div id="tabs-4">
-	     <div class="list"></div>
-	  </div>
+		<ul>
+			<li><a href="#tabs-1" id="1">관광지</a></li>
+			<li><a href="#tabs-2" id="2">숙박</a></li>
+			<li><a href="#tabs-3" id="3">식당</a></li>
+			<li><a href="#tabs-4" id="4">쇼핑</a></li>
+		</ul>
+		<div id="tabs-1">
+			<div class="list"></div>
+		</div>
+		<div id="tabs-2">
+			<div class="list"></div>
+		</div>
+		<div id="tabs-3">
+			<div class="list"></div>
+		</div>
+		<div id="tabs-4">
+			<div class="list"></div>
+		</div>
 	</div>
-<div id="footer">
-	<p>Copyright 2021. 이거사조 team, Ltd. all rights reserved.</p>
-	<p>조유하, 이현경, 정우성, 좌준호</p>
-	<p>Inquiry : uzzing1219@gmail.com</p>
-</div>
+	<div id="footer">
+		<p>Copyright 2021. 이거사조 team, Ltd. all rights reserved.</p>
+		<p>조유하, 이현경, 정우성, 좌준호</p>
+		<p>Inquiry : uzzing1219@gmail.com</p>
+	</div>
 </body>
 </html>

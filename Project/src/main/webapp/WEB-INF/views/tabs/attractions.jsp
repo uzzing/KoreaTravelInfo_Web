@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html>
 <head>
 <title>Attractions</title>
@@ -11,7 +10,7 @@
 <script type="text/javascript">
 
 	let areaData = {};
-	let pageNo = 1;
+	var pageNo = 1;
 	let areaCode = 0;
 	const typeOf = '1';
 	
@@ -29,7 +28,7 @@
 	function initUri() {
 		const url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
 		const path = "areaBasedList?";
-		const serviceKey = "DhLDqraxdid6%2Fja9et1Tx%2FwOaDHEmOy7Q8N65a33AQbfwLTxrOkTbFqr1Wt8RPB6G1zogF1iQ6aTB3AouTKrjw%3D%3D";
+		const serviceKey = "ZPZNEe3AqoTdcuRy%2BOxvrTqrmXJYb%2FYXN9rsn%2FCjtVvkQaV7X7UKeWk6HgOplQomrxQi2WjubBqYXVWndEb2Jg%3D%3D";
 		const MobileApp = "AppTest";
 		const MobileOS = "ETC";
 		const _type = "json";
@@ -67,47 +66,53 @@
 		});
 	}
 	
-	function getData(uri) {
-			$.get(uri, function(data, status) {
-				if (status === 'success') {
-					areaData = data.response.body.items;
-					showList(areaData);
-					
-					let html = "<div class='allPage'>  / " + data.response.body.totalCount + "</div>";
-					$('#allPage').html('');
-					$('#allPage').append(html);
-				} 
-				else alert('fail api');
-			});
-	}
 	
-	function getBookmark() {
-		var userid = 'a';
-		
-		$.ajax({
-			type: 'get',
-			url: 'getBookmark',
-			data: { userid: userid, typeOf: typeOf },
-			dataType: 'json',
-			success: showBookmark,
-			error: function(e) {
-				alert('북마크 불러오기 에러 : ' + e);
-				return false;
-			}
+	function getData(uri) {
+		$.get(uri, function(data, status) {
+			if (status === 'success') {
+				areaData = data.response.body.items;
+				showList(areaData);
+
+				let html = "<div class='allPage'>  / " + data.response.body.totalCount + "</div>";
+				$('#allPage').html('');
+				$('#allPage').append(html);
+			} else alert('fail api');
 		});
 	}
-	
+
+	function getBookmark() {
+		var userid = $('#loginId').val();
+		console.log(userid);
+
+		if (userid !== '') {
+			$.ajax({
+				type : 'get',
+				url : 'getBookmark',
+				data : {
+					userid : userid,
+					typeOf : typeOf
+				},
+				dataType : 'json',
+				success : showBookmark,
+				error : function(e) {
+					alert('북마크 불러오기 에러 : ' + e);
+					return false;
+				}
+			});
+		}
+	}
+
 	function showBookmark(res) {
-	
+
 		if (res.length != 0) {
 			$('.placeBox').each(function(index, obj) {
 				console.log($(obj));
 				var contentId = $(obj).find('.contentId').val();
 				console.log(contentId);
-	
+
 				$.each(res, function(index, data) {
 					console.log("data : " + data);
-						
+
 					if (data.contentId == contentId) {
 						$(obj).find('.heart').attr('src', 'resources/image/full_heart.png');
 						$(obj).find('.heart').attr('style', 'width:37px; height:37px;');
@@ -117,138 +122,152 @@
 			});
 		}
 	}
-	
-	function showList(areaData) {
-		
-		$(".list").html('');
-		
-		$.each(areaData.item, function(i, data) {
-			
-			let thumbnail = "<img src='resources/image/default/default_attraction.jpeg' class='thumbnail'/>";
-		    if (data.firstimage)
-		    	thumbnail = "<img src=" + data.firstimage + " class='thumbnail'/>";
 
-		    let html = "";
-		    html += "<div class='placeBox'>";
-		    html += 	"<input type='hidden' class='contentId' value='" + data.contentid + "'/>";
-		    html += 	"<div class='imgBox'>";
-		    html += 		thumbnail;
-		    html +=			"<img src='resources/image/heart.png' class='heart' onclick='bookmark(this)'/>";
-		    html += 	"</div>";
-		    html += 	"<div class='title' onclick='goMap(this)'>" + data.title + "</div>";
-		    html += 	"<div class='addr' onclick='goMap(this)'>" + data.addr1 + "</div>";
-		    html += "</div>";
-		    
-		    $(".list").append(html);
+	function showList(areaData) {
+
+		$(".list").html('');
+
+		$.each(areaData.item, function(i, data) {				
+			let thumbnail = "<img src='resources/image/default/default_attraction.jpeg' class='thumbnail'/>";
+			if (data.firstimage)
+				thumbnail = "<img src=" + data.firstimage + " class='thumbnail'/>";
+
+			let html = "";
+			html += "<div class='placeBox'>";
+			html += "<input type='hidden' class='contentId' value='" + data.contentid + "'/>";
+			html += "<div class='imgBox'>";
+			html += thumbnail;
+			html += "<img src='resources/image/heart.png' class='heart' onclick='bookmark(this)'/>";
+			html += "</div>";
+			html += "<div class='title' onclick='goMap(this)'>" + data.title + "</div>";
+			html += "<div class='addr' onclick='goMap(this)'>" + data.addr1 + "</div>";
+			html += "</div>";
+
+			$(".list").append(html);
 		});
-		
+
 		getBookmark();
 	}
-	
+
 	function goMap(obj) {
-		var title = $(obj).children('.title').text();
+		var title = $(obj).text();
 		console.log(title);
 		var url = "https://map.naver.com/v5/search/" + title;
 		window.open(url, '_blank');
 	}
-	
+
 	function bookmark(obj) {
-		
+
 		var contentId = $(obj).parents('.placeBox').find('.contentId').val();
 		var title = $(obj).parents('.placeBox').find('.title').text();
 		var addr = $(obj).parents('.placeBox').find('.addr').text();
-		var userid = 'a';
-		
-		if (!$(obj).attr('class').includes('full_heart')) {
-			$(obj).attr('src', 'resources/image/full_heart.png');
-			$(obj).attr('style', 'width:37px; height:37px;');
-			$(obj).addClass('full_heart');
-			
-			saveToDB(contentId, title, addr, userid);
-		}
-		else {
-			$(obj).attr('src', 'resources/image/heart.png');
-			$(obj).attr('style', 'width:35px; height:35px;');
-			$(obj).removeClass('full_heart');
-			
-			deleteFromDB(contentId, userid);
+		var userid = $('#loginId').val();
+		console.log(userid);
+
+		if (userid === '') {
+			alert('로그인해주세요.');
+			$(location).attr('href', '/loginForm');
+		} else {
+			if (!$(obj).attr('class').includes('full_heart')) {
+				$(obj).attr('src', 'resources/image/full_heart.png');
+				$(obj).attr('style', 'width:37px; height:37px;');
+				$(obj).addClass('full_heart');
+
+				saveToDB(contentId, title, addr, userid);
+			} else {
+				$(obj).attr('src', 'resources/image/heart.png');
+				$(obj).attr('style', 'width:35px; height:35px;');
+				$(obj).removeClass('full_heart');
+
+				deleteFromDB(contentId, userid);
+			}
 		}
 	}
-	
+
 	function saveToDB(contentId, title, addr, userid) {
 		$.ajax({
-			type: 'post',
-			url: 'makeBookmark',
-			data: { contentId : contentId, title: title, addr: addr, userid: userid, typeOf: typeOf },
-			success: function() {
+			type : 'post',
+			url : 'makeBookmark',
+			data : {
+				contentId : contentId,
+				title : title,
+				addr : addr,
+				userid : userid,
+				typeOf : typeOf
+			},
+			success : function() {
 				alert('북마크에 추가되었습니다.');
 			},
-			error: function(e) {
+			error : function(e) {
 				alert('에러발생 : ' + e);
 				return false;
 			}
 		});
 	}
-	
+
 	function deleteFromDB(contentId, userid) {
 		$.ajax({
-			type: 'post',
-			url: 'deleteBookmark',
-			data: { contentId : contentId, userid: userid },
-			success: function() {
+			type : 'post',
+			url : 'deleteBookmark',
+			data : {
+				contentId : contentId,
+				userid : userid
+			},
+			success : function() {
 				alert('북마크가 취소되었습니다.');
 			},
-			error: function(e) {
+			error : function(e) {
 				alert('에러발생 : ' + e);
 				return false;
 			}
 		});
 	}
-	
+
 	function buttons() {
 		$('.btn_left').on('click', function() {
 			if (pageNo !== 1) {
 				pageNo -= 1;
 				console.log(pageNo);
 				console.log(areaCode);
-				
+
 				let uri = "";
 				if (areaCode !== 0)
 					uri = initUri() + "&areaCode=" + areaCode + "&pageNo=" + pageNo;
-				else 
+				else
 					uri = initUri() + "&pageNo=" + pageNo;
-				getData(uri);
 				
+				getData(uri);
+
 				let html = "<div class='pageNo'>" + pageNo + "</div>";
 				$('#pageNo').html('');
 				$('#pageNo').append(html);
 			}
 		});
-		
+
 		$('.btn_right').on('click', function() {
 			pageNo += 1;
 			console.log(pageNo);
 			console.log(areaCode);
-			
+
 			let uri = "";
 			if (areaCode !== 0)
 				uri = initUri() + "&areaCode=" + areaCode + "&pageNo=" + pageNo;
-			else 
+			else
 				uri = initUri() + "&pageNo=" + pageNo;
-			getData(uri);
 			
+			getData(uri);
+
 			let html = "<div class='pageNo'>" + pageNo + "</div>";
 			$('#pageNo').html('');
 			$('#pageNo').append(html);
 		});
 	}
-	
+
 	function home() {
 		$('#logo').click(function() {
 			$(location).attr('href', '/');
 		});
 	}
-	
 </script>
 </head>
 <body>
@@ -280,6 +299,7 @@
 	        <button class="btn_city" id="jeju" value="39">제주</button>
 		</div>
 	</div>
+	<input type="hidden" id="loginId" value="${sessionScope.loginId}">
 	<div id="container">
 		<div class="btn_left"><img src="resources/image/left.png"/></div>
 		<div class="list"></div>

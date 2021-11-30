@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.scit.team4.dao.AskDAO;
+import com.scit.team4.vo.administrator;
 import com.scit.team4.vo.ask;
+import com.scit.team4.vo.comment_ask;
+import com.scit.team4.vo.user_Info;
 
 @Service
 public class AskService {
+	
 	@Autowired
 	AskDAO askdao;
 	
@@ -40,6 +44,31 @@ public class AskService {
 
 	public int getBoardCount(String searchItem, String searchWord) {
 		int result = askdao.getBoardCount(searchItem,searchWord);
+		return result;
+	}
+
+	public comment_ask selectOneComment(int ask_seq) {
+		comment_ask result = askdao.selectOneComment(ask_seq);
+		return result;
+	}
+
+	public int insertComment(comment_ask comment) {
+		int result = askdao.insertComment(comment);
+		return result;
+	}
+
+	public int updateComment(comment_ask comment) {
+		int result = askdao.updateComment(comment);
+		return result;
+	}
+
+	public administrator selectOneAdmin(String checkedID) {
+		administrator result = askdao.selectOneAdmin(checkedID);
+		return result;
+	}
+
+	public user_Info selectOneUser(String checkedID) {
+		user_Info result = askdao.selectOneUser(checkedID);
 		return result;
 	}
 	

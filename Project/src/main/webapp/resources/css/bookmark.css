@@ -9,6 +9,12 @@ body {
 	font-family: 'Gowun Dodum', sans-serif;
 }
 
+#header {
+	font-size: 35px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
 #logo {
 	font-size: 70px;
 	text-align: center;
@@ -49,6 +55,12 @@ body {
 	float: left;
 }
 
+.placeBox:hover {
+	transform: translateY(-3%);
+	transition: all 0.5s ease;
+	box-shadow: 2px 2px 5px 0px #adadad;
+}
+
 .placeBox .imgBox {
 	width: 250px;
 	height: 180px;
@@ -69,6 +81,10 @@ body {
     margin-top: 10px;
     filter: invert(1);
     z-index: 5;
+}
+
+.placeBox .imgBox .heart:hover {
+	cursor: pointer;
 }
 
 .placeBox .title {

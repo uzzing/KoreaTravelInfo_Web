@@ -6,9 +6,13 @@
 	<typeAliases>
 		<typeAlias type="com.scit.team4.vo.ask" alias="Ask" />
 		<typeAlias type="com.scit.team4.vo.Bookmark" alias="Bookmark" />
+		<typeAlias type="com.scit.team4.vo.comment_ask" alias="Comment" />
+		<typeAlias type="com.scit.team4.vo.administrator" alias="Administrator" />
+		<typeAlias type="com.scit.team4.vo.user_Info" alias="User_Info" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/AskMapper.xml" />
 		<mapper resource="mappers/BookmarkMapper.xml" />
+		<mapper resource="mappers/MemberMapper.xml" />
 	</mappers>
 </configuration>

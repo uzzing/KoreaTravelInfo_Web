@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scit.team4.dao.MemberMapper">
+
+<select id="selectMember" parameterType="String" resultType="User_Info">
+SELECT *
+FROM User_Info
+WHERE
+	userid = #{userid}
+</select>
+
+<select id="selectAdmin" parameterType="String" resultType="Administrator">
+SELECT *
+FROM Administrator
+WHERE
+	adminid = #{adminid}
+</select>
+
+<insert id="join" parameterType="User_Info">
+INSERT INTO User_Info
+(
+	userid
+	, userpwd
+)
+	
+VALUES 
+(
+	#{userid}
+	, #{userpwd}
+)
+</insert>
+
+</mapper>

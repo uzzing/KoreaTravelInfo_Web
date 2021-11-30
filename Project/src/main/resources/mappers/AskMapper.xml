@@ -6,26 +6,38 @@
 <mapper namespace="com.scit.team4.dao.AskMapper">
 <insert id="insertAsk" parameterType="Ask">
 INSERT into ask
-(
-	ask_seq
-	,ask_title
-	,userid
-	,ask_text
-)
+(ask_seq,ask_title,userid,ask_text)
 VALUES(
-	ask_sequence.nextval
-	,#{ask_title}
-	,#{userid}
-	,#{ask_text}
+ask_seq.nextval, #{ask_title},#{userid},#{ask_text}
 )
 </insert>
 
+<select id="selectOneAdmin" parameterType="String" resultType="Administrator">
+select
+	adminid
+	,adminpwd
+from 
+	Administrator
+where
+	adminid = #{checkedID}
+</select>
+
+<select id="selectOneUser" parameterType="String" resultType="User_Info">
+select
+	userid
+	,userpwd
+from 
+	User_Info
+where
+	userid = #{checkedID}
+</select>
+
 <select id="selectAllAsk" resultType="Ask" parameterType="Map">
 
-select * from(   <!-- 삼중 쿼리 도랏?-->  
+select * from(  
     select rownum n, b.* 
     from
-        (select <!-- rownum을 가져오기 위해 테이블을 서브쿼리 화-->  
+        (select 
             ASK_SEQ
 			,ASK_TITLE
 			,to_char(ASK_DATE,'YYYY/MM/DD') as ASK_DATE
@@ -90,5 +102,34 @@ where
 	</choose>
 	like '%'||#{searchWord}||'%'
 </select>
+
+<insert id="insertComment" parameterType="Comment">
+INSERT into comment_ask
+(comment_seq,adminid,comment_text,ask_seq)
+VALUES(
+comment_seq.nextval, #{adminid},#{comment_text},#{ask_seq}
+)
+</insert>
+
+<select id="selectOneComment" parameterType="int" resultType="Comment">
+select
+	 comment_seq
+    ,adminID
+    ,comment_text 
+    ,comment_date
+from 
+	Comment_ask
+where
+	ask_seq = #{ask_seq}
+</select>
+
+<update id="updateComment" parameterType="Comment">
+update Comment_ask
+set 
+    comment_text =#{comment_text}
+    ,comment_date = sysdate
+where 
+	ASK_SEQ = #{ask_seq}
+</update>
 
 </mapper>

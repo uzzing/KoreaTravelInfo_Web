@@ -9,7 +9,8 @@
 <insert id="makeBookmark" parameterType="HashMap">
 INSERT INTO bookmark
 (
-	contentId
+	bookmark_seq
+	,contentId
 	,title
 	,addr
 	,userid
@@ -17,7 +18,8 @@ INSERT INTO bookmark
 )
 VALUES
 (
-	#{contentId}
+	bookmark_seq.nextval
+	,#{contentId}
 	,#{title}
 	,#{addr}
 	,#{userid}

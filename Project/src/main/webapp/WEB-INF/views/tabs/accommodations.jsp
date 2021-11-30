@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html>
 <head>
 <title>Accommodations</title>
@@ -29,7 +28,7 @@
 	function initUri() {
 		const url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
 		const path = "areaBasedList?";
-		const serviceKey = "DhLDqraxdid6%2Fja9et1Tx%2FwOaDHEmOy7Q8N65a33AQbfwLTxrOkTbFqr1Wt8RPB6G1zogF1iQ6aTB3AouTKrjw%3D%3D";
+		const serviceKey = "ZPZNEe3AqoTdcuRy%2BOxvrTqrmXJYb%2FYXN9rsn%2FCjtVvkQaV7X7UKeWk6HgOplQomrxQi2WjubBqYXVWndEb2Jg%3D%3D";
 		const MobileApp = "AppTest";
 		const MobileOS = "ETC";
 		const _type = "json";
@@ -82,19 +81,22 @@
 	}
 	
 	function getBookmark() {
-		var userid = 'a';
+		var userid = $('#loginId').val();
+		console.log(userid);
 		
-		$.ajax({
-			type: 'get',
-			url: 'getBookmark',
-			data: { userid: userid, typeOf: typeOf },
-			dataType: 'json',
-			success: showBookmark,
-			error: function(e) {
-				alert('북마크 불러오기 에러 : ' + e);
-				return false;
-			}
-		});
+		if (userid === '') {
+			$.ajax({
+				type: 'get',
+				url: 'getBookmark',
+				data: { userid: userid, typeOf: typeOf },
+				dataType: 'json',
+				success: showBookmark,
+				error: function(e) {
+					alert('북마크 불러오기 에러 : ' + e);
+					return false;
+				}
+			});
+		}
 	}
 	
 	function showBookmark(res) {
@@ -146,7 +148,7 @@
 	}
 	
 	function goMap(obj) {
-		var title = $(obj).children('.title').text();
+		var title = $(obj).text();
 		console.log(title);
 		var url = "https://map.naver.com/v5/search/" + title;
 		window.open(url, '_blank');
@@ -157,21 +159,28 @@
 		var contentId = $(obj).parents('.placeBox').find('.contentId').val();
 		var title = $(obj).parents('.placeBox').find('.title').text();
 		var addr = $(obj).parents('.placeBox').find('.addr').text();
-		var userid = 'a';
+		var userid = $('#loginId').val();
+		console.log(userid);
 		
-		if (!$(obj).attr('class').includes('full_heart')) {
-			$(obj).attr('src', 'resources/image/full_heart.png');
-			$(obj).attr('style', 'width:37px; height:37px;');
-			$(obj).addClass('full_heart');
-			
-			saveToDB(contentId, title, addr, userid);
+		if (userid === '') {
+			alert('로그인해주세요.');
+			$(location).attr('href', '/loginForm');
 		}
 		else {
-			$(obj).attr('src', 'resources/image/heart.png');
-			$(obj).attr('style', 'width:35px; height:35px;');
-			$(obj).removeClass('full_heart');
-			
-			deleteFromDB(contentId, userid);
+			if (!$(obj).attr('class').includes('full_heart')) {
+				$(obj).attr('src', 'resources/image/full_heart.png');
+				$(obj).attr('style', 'width:37px; height:37px;');
+				$(obj).addClass('full_heart');
+				
+				saveToDB(contentId, title, addr, userid);
+			}
+			else {
+				$(obj).attr('src', 'resources/image/heart.png');
+				$(obj).attr('style', 'width:35px; height:35px;');
+				$(obj).removeClass('full_heart');
+				
+				deleteFromDB(contentId, userid);
+			}
 		}
 	}
 	
@@ -280,6 +289,7 @@
 	        <button class="btn_city" id="jeju" value="39">제주</button>
 		</div>
 	</div>
+	<input type="hidden" id="loginId" value="${sessionScope.loginId}">
 	<div id="container">
 		<div class="btn_left"><img src="resources/image/left.png"/></div>
 		<div class="list"></div>

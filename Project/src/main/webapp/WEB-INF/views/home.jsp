@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html>
 <head>
 <title>Home</title>
@@ -21,7 +20,7 @@
 		
 		const url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
 		const path = "areaBasedList?";
-		const serviceKey = "DhLDqraxdid6%2Fja9et1Tx%2FwOaDHEmOy7Q8N65a33AQbfwLTxrOkTbFqr1Wt8RPB6G1zogF1iQ6aTB3AouTKrjw%3D%3D";
+		const serviceKey = "ZPZNEe3AqoTdcuRy%2BOxvrTqrmXJYb%2FYXN9rsn%2FCjtVvkQaV7X7UKeWk6HgOplQomrxQi2WjubBqYXVWndEb2Jg%3D%3D";
 		const MobileApp = "AppTest";
 		const MobileOS = "ETC";
 		const _type = "json";
@@ -62,7 +61,7 @@
 		const contentTypeId = "32";
 		
 		// show list
-		$.get(uri + contentTypeId + "&pageNo=4", function(data, status) {
+		$.get(uri + contentTypeId + "&pageNo=50", function(data, status) {
 			if (status === 'success') {
 				areaData = data.response.body.items;
 				showList(areaData, contentTypeId);
@@ -76,7 +75,7 @@
 		const contentTypeId = "39";
 		
 		// show list
-		$.get(uri + contentTypeId + "&pageNo=3", function(data, status) {
+		$.get(uri + contentTypeId + "&pageNo=100", function(data, status) {
 			if (status === 'success') {
 				areaData = data.response.body.items;
 				showList(areaData, contentTypeId);
@@ -90,7 +89,7 @@
 		const contentTypeId = "38";
 		
 		// show list
-		$.get(uri + contentTypeId + "&pageNo=9", function(data, status) {
+		$.get(uri + contentTypeId + "&pageNo=70", function(data, status) {
 			if (status === 'success') {
 				areaData = data.response.body.items;
 				showList(areaData, contentTypeId);
@@ -129,8 +128,8 @@
 		    let html = "";
 		    html += "<div class='placeBox'>";
 		    html += 	"<div class='imgBox'>" + thumbnail + "</div>";
-		    html += 	"<div class='title'>" + data.title + "</div>";
-		    html += 	"<div class='addr'>" + data.addr1 + "</div>";
+		    html += 	"<div class='title' onclick='goMap(this)'>" + data.title + "</div>";
+		    html += 	"<div class='addr' onclick='goMap(this)'>" + data.addr1 + "</div>";
 		    html += "</div>";
 		    
 		    $(container).append(html);
@@ -146,7 +145,22 @@
 		});
 	}
 	
+	function goMap(obj) {
+		var title = $(obj).text();
+		console.log(title);
+		var url = "https://map.naver.com/v5/search/" + title;
+		window.open(url, '_blank');
+	}
+	
 	function buttons() {
+		$('.login').click(function() {
+			$(location).attr('href', '/loginForm');
+		})
+		
+		$('.logout').click(function() {
+			$(location).attr('href', '/logout');
+		})
+		
 		$(".tabs1 img").click(function() {
 			$(".tabs1 img").mouseenter();
 			$(location).attr('href', '/attractions');
@@ -169,7 +183,11 @@
 		})
 		
 		$('.question').click(function() {
-			$(location).attr('href', '/board');
+			$(location).attr('href', '/listAsk');
+		})
+		
+		$('.login_icon').click(function() {
+			$(location).attr('href', '/loginFormAdmin');
 		})
 	}
 </script>
@@ -178,24 +196,33 @@
 <div id="logo">K-Travel</div>
 <hr size="1" width="90%" color="#adadad">
 <div id="tabs">
-	<div class="tabs-Title">테마별 여행</div>
+	<div id="member">
+		<div class="tabs-Title">테마별 여행</div>
+		<c:if test="${empty sessionScope.loginId}">
+			<div class="login">로그인</div>
+		</c:if>
+		<c:if test="${not empty sessionScope.loginId}">
+			<div class="loginid">안녕하세요 ${sessionScope.loginId}님</div>
+			<div class="logout">로그아웃</div>
+		</c:if>
+	</div>
 	<div class="tabs1">
-		<img src="resources/image/tabs/attraction.jpg"/>
+		<div class="scale"><img src="resources/image/tabs/attraction.jpg"/></div>
 		<div class="tabsTitle">관광지</div>
 		<div class="tabsSub">10914건의 정보</div>
 	</div>
 	<div class="tabs2">
-		<img src="resources/image/tabs/hotel.jpg"/>
+		<div class="scale"><img src="resources/image/tabs/hotel.jpg"/></div>
 		<div class="tabsTitle">숙박</div>
 		<div class="tabsSub">3403건의 정보</div>
 	</div>
 	<div class="tabs3">
-		<img src="resources/image/tabs/restaurant.jpg"/>
+		<div class="scale"><img src="resources/image/tabs/restaurant.jpg"/></div>
 		<div class="tabsTitle">음식점</div>
 		<div class="tabsSub">7372건의 정보</div>
 	</div>
 	<div class="tabs4">
-		<img src="resources/image/tabs/shopping.jpg"/>
+		<div class="scale"><img src="resources/image/tabs/shopping.jpg"/></div>
 		<div class="tabsTitle">쇼핑/시장</div>
 		<div class="tabsSub">1283건의 정보</div>
 	</div>
@@ -229,6 +256,11 @@
     <div id="container4" class="container"></div>
   </div>
 </div>
+<c:if test="${empty sessionScope.loginId}">
+	<div id="login_admin">
+		<img src="resources/image/login_admin.png" class="login_icon"/>
+	</div>
+</c:if>
 
 <div id="footer">
 <p>Copyright 2021. 이거사조 team, Ltd. all rights reserved.</p>

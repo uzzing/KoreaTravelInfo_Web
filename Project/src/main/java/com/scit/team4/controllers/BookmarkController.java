@@ -54,8 +54,6 @@ public class BookmarkController {
 		map.put("userid", userid);
 		map.put("typeOf", typeOf);
 
-		System.out.println(typeOf);
-
 		return bookmarkService.getBookmark(map);
 	}
 

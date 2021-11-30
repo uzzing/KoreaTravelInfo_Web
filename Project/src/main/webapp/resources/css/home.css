@@ -2,7 +2,7 @@
 
 body {
 	position: absolute;
-  	top: 180%;
+  	top: 175%;
   	left: 50%;
   	transform: translate(-50%, -50%);
 	font-family: 'Gowun Dodum', sans-serif;
@@ -14,33 +14,103 @@ body {
 	font-family: 'Comforter Brush', cursive;
 }
 
+#member {
+	display: table;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+
+.loginid {
+	width: 200px;
+    float: left;
+    margin-left: 606px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.login {
+	margin-top: 20px;
+}
+
+.login, .logout {
+	width: 70px;
+    font-size: 17px;
+    padding: 5px;
+    border: 1px solid #adadad;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px 1px #adadad;
+    text-align: center;
+    float: left;
+    margin-left: 680px;
+}
+
+.login:hover {
+	width: 70px;
+	font-size: 17px;
+	padding: 5px;
+	border: 1px solid white;
+	background-color: #808ecf;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.logout:hover {
+	width: 70px;
+	font-size: 17px;
+	padding: 5px;
+	border: 1px solid white;
+	color: white;
+	background-color: #808ecf;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+
 #tabs {
 	width: 100%;
 	height: 403px;
 	padding-top: 20px;
-	padding-bottom: 20px;
 	display: table;
 }
 
 .tabs-Title {
 	font-size: 50px;
-	margin-left: 10px;
+	margin-left: 15px;
+	float: left;
 }
 
 .tabs1, .tabs2, .tabs3, .tabs4 {
-	position: relative;
-	width: 250px;
-	float: left;
-	border-radius: 10px;
-	padding: 20px;
+	width: 244px;
+    height: 309px;
+    float: left;
+    margin: 11px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 1px 1px 8px 1px #adadad;
+}
+
+.scale {
+	transform: scale(1);
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	-o-transform: scale(1);
+	transition: all 0.5s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+}
+
+.scale:hover {
+	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	-moz-transform: scale(1.2);
+	-ms-transform: scale(1.2);
+	-o-transform: scale(1.2);
 }
 
 #tabs img {
 	position: absolute;
-	width: 240px;
-	height: 300px;
-	border-radius: 10px;
-	box-shadow: 1px 1px 8px 1px #adadad;
+    width: 250px;
+    object-fit: fill;
 }
 
 #tabs img:hover {
@@ -78,7 +148,6 @@ body {
 	height: 210px;
 	float: left;
 }
-
 
 #header2 img{
 	height: 200px;
@@ -133,6 +202,12 @@ body {
 	box-shadow: 1px 1px 5px -2px #adadad;
 }
 
+.placeBox:hover {
+	transform: translateY(-3%);
+	transition: all 0.5s ease;
+	box-shadow: 2px 2px 5px 0px #adadad;
+}
+
 .placeBox .imgBox {
 	width: 240px;
 	height: 180px;
@@ -161,6 +236,23 @@ body {
 .placeBox .addr {
 	font-size: 13px;
 	padding-left: 10px;
+}
+
+.placeBox .title:hover {
+	cursor: pointer;
+}
+
+.placeBox .addr:hover {
+	cursor: pointer;
+}
+
+#login_admin .login_icon {
+	width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 10px;
+    opacity: 50%;
+    cursor: pointer;
 }
 
 #footer {
