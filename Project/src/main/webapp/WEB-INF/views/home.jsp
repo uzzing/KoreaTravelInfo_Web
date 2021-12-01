@@ -40,6 +40,7 @@
 		shoppingList(uri);
 		
 		buttons();
+		googleTranslateElementInit();
 	});
 	
 	function attractionList(uri) {
@@ -190,6 +191,15 @@
 			$(location).attr('href', '/loginFormAdmin');
 		})
 	}
+	
+	function googleTranslateElementInit() {
+		new google.translate.TranslateElement({
+			pageLanguage: 'ko',
+			includedLanguages: 'ko,zh-CN,zh-TW,ja,vi,th,tl,km,my,mn,ru,en,fr,ar',
+			layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+			autoDisplay: false
+		}, 'google_translate_element');
+	}
 </script>
 </head>
 <body>
@@ -261,7 +271,6 @@
 		<img src="resources/image/login_admin.png" class="login_icon"/>
 	</div>
 </c:if>
-
 <div id="footer">
 <p>Copyright 2021. 이거사조 team, Ltd. all rights reserved.</p>
 <p>조유하, 이현경, 정우성, 좌준호</p>

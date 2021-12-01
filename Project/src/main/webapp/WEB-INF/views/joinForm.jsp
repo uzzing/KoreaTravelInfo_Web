@@ -36,6 +36,10 @@ $(function(){
 			}
 		});
 	});
+	
+	$('#logo').click(function() {
+		$(location).attr('href', '/');
+	});
 });
 
 function formCheck() {
@@ -82,7 +86,7 @@ body {
 </style>
 </head>
 <body>
-<div id="logo">K-Travel</div>
+	<div id="logo">K-Travel</div>
 	<form action="/join" method="post" onsubmit="return formCheck();">
 		<table>
 			<tr>

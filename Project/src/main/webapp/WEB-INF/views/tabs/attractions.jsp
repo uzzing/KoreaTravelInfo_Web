@@ -73,7 +73,8 @@
 				areaData = data.response.body.items;
 				showList(areaData);
 
-				let html = "<div class='allPage'>  / " + data.response.body.totalCount + "</div>";
+				let page = Math.floor(data.response.body.totalCount / 8);
+				let html = "<div class='allPage'>  / " + page + "</div>";
 				$('#allPage').html('');
 				$('#allPage').append(html);
 			} else alert('fail api');
